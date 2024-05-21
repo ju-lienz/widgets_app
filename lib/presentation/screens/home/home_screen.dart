@@ -15,17 +15,49 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// Internal widget for building the home screen content
 class _HomeView extends StatelessWidget {
   const _HomeView();
-
-  final List<MenuItems> menuItem = appMenuItems;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: appMenuItems.length,
       itemBuilder: (BuildContext context, int index) {
-        return Text(menuItem[index].title);
+        final menuItem = appMenuItems[index];
+        // Return a custom ListTile widget for each menu item
+        return _CustomListTile(menuItem: menuItem);
+      },
+    );
+  }
+}
+
+// Custom widget for building a ListTile with menu item data
+class _CustomListTile extends StatelessWidget {
+  const _CustomListTile({
+    required this.menuItem,
+  });
+
+  final MenuItems menuItem;
+
+  @override
+  Widget build(BuildContext context) {
+    // Access the current theme color scheme from the context
+    final theme = Theme.of(context).colorScheme;
+    return ListTile(
+      leading: Icon(
+        menuItem.icon,
+        color: theme.primary,
+      ),
+      trailing: Icon(
+        Icons.arrow_forward,
+        color: theme.primary,
+      ),
+      title: Text(menuItem.title),
+      subtitle: Text(menuItem.subTitle),
+      onTap: () {
+        // TODO: Implement navigation logic using GoRouter when available
       },
     );
   }
