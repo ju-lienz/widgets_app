@@ -29,5 +29,8 @@ class AppTheme {
         useMaterial3: true,
         // Sets the primary color based on the selected color index in the list
         colorSchemeSeed: colorList[selectedColor],
+        appBarTheme: const AppBarTheme(
+          centerTitle: false, // Configuration of all the appBars
+        ),
       );
 }
