@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SlideInfo {
   final String title;
@@ -30,16 +31,29 @@ class AppTutorialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        physics: const BouncingScrollPhysics(),
-        children: slides
-            .map(
-              (slideData) => _Slide(
-                  title: slideData.title,
-                  image: slideData.imageUrl,
-                  caption: slideData.caption),
-            )
-            .toList(),
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          PageView(
+            physics: const BouncingScrollPhysics(),
+            children: slides
+                .map(
+                  (slideData) => _Slide(
+                      title: slideData.title,
+                      imageUrl: slideData.imageUrl,
+                      caption: slideData.caption),
+                )
+                .toList(),
+          ),
+          Positioned(
+            right: 20,
+            top: 50,
+            child: TextButton(
+              onPressed: () => context.pop(),
+              child: const Text("Skip"),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -47,13 +61,42 @@ class AppTutorialScreen extends StatelessWidget {
 
 class _Slide extends StatelessWidget {
   final String title;
-  final String image;
+  final String imageUrl;
   final String caption;
   const _Slide(
-      {required this.title, required this.image, required this.caption});
+      {required this.title, required this.imageUrl, required this.caption});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final titleStyle = Theme.of(context).textTheme.titleLarge;
+    final captionStyle = Theme.of(context).textTheme.bodySmall;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image(
+              image: AssetImage(imageUrl),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              title,
+              style: titleStyle,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              caption,
+              style: captionStyle,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
