@@ -44,7 +44,7 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
     isLoading = false;
     if (isMounted) return;
     setState(() {});
-    //TODO: Move scroll
+    moveScrollToBottom();
   }
 
   Future<void> onRefresh() async {
@@ -58,6 +58,16 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
     imagesIds.add(lastId + 1);
     addFiveImages();
     setState(() {});
+  }
+
+  void moveScrollToBottom() {
+    // Execute if the user display is near the end
+    if (scrollController.position.pixels + 100 <=
+        scrollController.position.maxScrollExtent) return;
+
+    scrollController.animateTo(scrollController.position.pixels,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn);
   }
 
   void addFiveImages() {
