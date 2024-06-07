@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets_app/config/menu/menu_items.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});
@@ -9,8 +10,10 @@ class SideMenu extends StatefulWidget {
 
 class _SideMenuState extends State<SideMenu> {
   int navDrawerIndex = 0; //Menu option selected
+
   @override
   Widget build(BuildContext context) {
+    final hasNotch = MediaQuery.of(context).viewPadding.top > 35;
     return NavigationDrawer(
       selectedIndex: navDrawerIndex,
       onDestinationSelected: (value) {
@@ -18,15 +21,31 @@ class _SideMenuState extends State<SideMenu> {
           navDrawerIndex = value;
         });
       },
-      children: const [
-        NavigationDrawerDestination(
-          icon: Icon(Icons.add),
-          label: Text("Home screen"),
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(28, hasNotch ? 10 : 20, 16, 10),
+          child: const Text("Opciones principales"),
         ),
-        NavigationDrawerDestination(
-          icon: Icon(Icons.access_alarm_outlined),
-          label: Text("Otra pantalla"),
+        ...appMenuItems.sublist(0, 3).map(
+              (item) => NavigationDrawerDestination(
+                icon: Icon(item.icon),
+                label: Text(item.title),
+              ),
+            ),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
+          child: Divider(),
         ),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
+          child: Text("More options"),
+        ),
+        ...appMenuItems.sublist(3).map(
+              (item) => NavigationDrawerDestination(
+                icon: Icon(item.icon),
+                label: Text(item.title),
+              ),
+            ),
       ],
     );
   }
