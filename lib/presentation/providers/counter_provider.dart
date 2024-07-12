@@ -9,4 +9,4 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///
 /// Here, the `counterProvider` is used to track the value of a counter. The initial value is 5,
 /// and the counter can be incremented or decremented using provider actions.
-final counterProvider = StateProvider((ref) => 5);
+final counterProvider = StateProvider<int>((ref) => 5);
