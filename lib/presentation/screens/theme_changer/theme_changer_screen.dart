@@ -30,8 +30,8 @@ class _ThemeChangerView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    /// `watch` permite que Riverpod sea el encargado de redibujar el
-    /// widget o no. En estos casos no se recomienda el uso del `read`
+    /// `watch` allows Riverpod to handle whether the widget should be
+    /// redrawn or not. In these cases, it is not recommended to use `read`
     final List<Color> colors = ref.watch(colorListProvider);
     return ListView.builder(
       itemCount: colors.length,
@@ -43,7 +43,7 @@ class _ThemeChangerView extends ConsumerWidget {
             style: TextStyle(color: color),
           ),
           subtitle: Text('${color.value}'),
-          activeColor: color,
+          activeColor: color, // Color of the selected icon
           value: index,
           groupValue: 5,
           onChanged: (value) {
