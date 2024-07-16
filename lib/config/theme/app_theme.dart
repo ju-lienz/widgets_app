@@ -16,17 +16,21 @@ const colorList = [
 class AppTheme {
   /// The currently selected color index
   final int selectedColor;
+  final bool isDarkMode;
 
   // Constructor with an optional parameter for selectedColor
   // Defaults to the first color (index 0)
-  AppTheme({this.selectedColor = 0})
-      : assert(selectedColor >= 0, 'Selected colores must be greater than 0'),
+  AppTheme({
+    this.selectedColor = 0,
+    this.isDarkMode = false,
+  })  : assert(selectedColor >= 0, 'Selected colores must be greater than 0'),
         assert(selectedColor < colorList.length,
             'Selected colores must be less or equal than ${colorList.length - 1}');
 
   /// Creates a ThemeData object based on the selected color
   ThemeData getTheme() => ThemeData(
         useMaterial3: true,
+        brightness: isDarkMode ? Brightness.dark : Brightness.light,
         // Sets the primary color based on the selected color index in the list
         colorSchemeSeed: colorList[selectedColor],
         appBarTheme: const AppBarTheme(
