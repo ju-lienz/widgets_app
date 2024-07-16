@@ -16,7 +16,10 @@ class ThemeChangerScreen extends ConsumerWidget {
             icon: isDarkMode
                 ? const Icon(Icons.dark_mode)
                 : const Icon(Icons.light_mode),
-            onPressed: () {},
+            onPressed: () {
+              //todo: improve comments
+              ref.read(isDarkModeProvider.notifier).update((state) => !state);
+            },
           ),
         ],
       ),
@@ -33,10 +36,12 @@ class _ThemeChangerView extends ConsumerWidget {
     /// `watch` allows Riverpod to handle whether the widget should be
     /// redrawn or not. In these cases, it is not recommended to use `read`
     final List<Color> colors = ref.watch(colorListProvider);
+    final int selectedColor = ref.watch(selectedColorProvider);
+    final bool isDarkMode = ref.watch(isDarkModeProvider);
     return ListView.builder(
       itemCount: colors.length,
       itemBuilder: (context, index) {
-        final Color color = colors[index];
+        Color color = colors[index];
         return RadioListTile(
           title: Text(
             'This color',
@@ -45,9 +50,12 @@ class _ThemeChangerView extends ConsumerWidget {
           subtitle: Text('${color.value}'),
           activeColor: color, // Color of the selected icon
           value: index,
-          groupValue: 5,
+          groupValue: selectedColor,
           onChanged: (value) {
-            // todo: notify change
+            // When the radio button is selected, update the selectedColorProvider's state
+            // to the current index. This causes the selected color to change and triggers
+            // a rebuild of the widget to reflect the new selection.
+            ref.read(selectedColorProvider.notifier).state = index;
           },
         );
       },
