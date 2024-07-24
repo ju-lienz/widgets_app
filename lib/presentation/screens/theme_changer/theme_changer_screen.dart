@@ -17,7 +17,6 @@ class ThemeChangerScreen extends ConsumerWidget {
                 ? const Icon(Icons.dark_mode)
                 : const Icon(Icons.light_mode),
             onPressed: () {
-              //todo: improve comments
               ref.read(isDarkModeProvider.notifier).update((state) => !state);
             },
           ),
@@ -37,7 +36,6 @@ class _ThemeChangerView extends ConsumerWidget {
     /// redrawn or not. In these cases, it is not recommended to use `read`
     final List<Color> colors = ref.watch(colorListProvider);
     final int selectedColor = ref.watch(selectedColorProvider);
-    final bool isDarkMode = ref.watch(isDarkModeProvider);
     return ListView.builder(
       itemCount: colors.length,
       itemBuilder: (context, index) {
